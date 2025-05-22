@@ -14,7 +14,7 @@ on:
 jobs:
   test:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     # Strategy allows specifying matrix axis(es) that will run for the test
     strategy:
@@ -39,6 +39,9 @@ jobs:
           go-version: '1.23'
           check-latest: true
 
+      - name: Runner check 1
+        run: cat /etc/release
+
       # Build anax binaries
       - name: Build anax binaries
         run: cd ${GOPATH}/src/github.com/${GITHUB_REPOSITORY} && make
@@ -47,6 +50,12 @@ jobs:
       - name: Build the e2edev docker images
         run: cd ${GOPATH}/src/github.com/${GITHUB_REPOSITORY} && make -C test build-remote
 
+      - name: Runner check 2
+        run: cat /etc/release
+
       # E2E development test
       - name: E2E dev-test
         run: cd ${GOPATH}/src/github.com/${GITHUB_REPOSITORY} && make -C test clean && make -C test test TEST_VARS=${{matrix.tests}}
+
+      - name: Runner check 3
+        run: cat /etc/release
