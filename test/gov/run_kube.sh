@@ -321,12 +321,6 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
 
-
-which microk8s
-
-$cprefix microk8s.kubectl logs --all-pods=true --all-containers=true -n ${AGENT_NAME_SPACE}
-
-
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
 	$cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn register -f /home/agentuser/node_ui_k8s_embedded_svc.json -p e2edev@somecomp.com/sk8s-with-embedded-ns -u root/root:${EXCH_ROOTPW}
 	if [ $? -ne 0 ]; then
