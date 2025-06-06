@@ -283,7 +283,7 @@ $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator
 $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator/node_ui.json ${AGENT_NAME_SPACE}/${POD}:/home/agentuser/node_ui_k8s_svc1.json
 $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator-with-embedded-ns/node_ui.json ${AGENT_NAME_SPACE}/${POD}:/home/agentuser/node_ui_k8s_embedded_svc.json
 
-$cprefix microk8s.kubectl get pods -n ${AGENT_NAME_SPACE}
+$cprefix microk8s.kubectl get pods -n ${AGENT_NAME_SPACE} -o wide
 
 # cluster agent pattern test
 # - Failed case:
@@ -324,7 +324,9 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 	fi
 
 
-$cprefix microk8s.kubectl logs --all-pods --all-containers -n ${AGENT_NAME_SPACE}
+which microk8s
+
+$cprefix microk8s.kubectl logs --all-pods=true --all-containers=true -n ${AGENT_NAME_SPACE}
 
 
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
