@@ -283,6 +283,7 @@ $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator
 $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator/node_ui.json ${AGENT_NAME_SPACE}/${POD}:/home/agentuser/node_ui_k8s_svc1.json
 $cprefix microk8s.kubectl cp $PWD/gov/input_files/k8s_deploy/topservice-operator-with-embedded-ns/node_ui.json ${AGENT_NAME_SPACE}/${POD}:/home/agentuser/node_ui_k8s_embedded_svc.json
 
+$cprefix microk8s.kubectl get pods
 
 # cluster agent pattern test
 # - Failed case:
@@ -321,6 +322,10 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 	else
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
+
+
+$cprefix microk8s.kubectl logs ${POD}
+
 
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
 	$cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn register -f /home/agentuser/node_ui_k8s_embedded_svc.json -p e2edev@somecomp.com/sk8s-with-embedded-ns -u root/root:${EXCH_ROOTPW}
