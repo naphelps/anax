@@ -312,9 +312,14 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 		echo -e "${PREFIX} cluster agent get expected error when register sk8s-with-cluster-ns, which has non-empty cluster namespace"
 	fi
 
+
+# ----------------------
+
 result3=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
-echo ${result3}
+echo "test/gov/run_kube.sh:319"
 echo ${result3} | jq
+
+# ----------------------
 
 	result=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list | jq -r '.configstate.state')
 	if [ "$result" != "unconfigured" ]; then
@@ -324,9 +329,20 @@ echo ${result3} | jq
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
 
+
+# ----------------------
+
+result7=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn exchange node list agent-in-kube -o userdev -u root/root:${EXCH_ROOTPW})
+echo "test/gov/run_kube.sh:336"
+echo ${result7} | jq
+
 result5=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
-echo ${result5}
+echo "test/gov/run_kube.sh:340"
 echo ${result5} | jq
+
+# ----------------------
+
+
 
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
 	$cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn register -f /home/agentuser/node_ui_k8s_embedded_svc.json -p e2edev@somecomp.com/sk8s-with-embedded-ns -u root/root:${EXCH_ROOTPW}
@@ -392,6 +408,18 @@ else
 		echo -e "${PREFIX} cluster agent registered with deployment policy userdev/bp_k8s_embedded_ns, verifying agreement..."
 	fi
 
+
+
+# ----------------------
+
+result3=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo "test/gov/run_kube.sh:416"
+echo ${result3} | jq
+
+# ----------------------
+
+
+
 	sleep 30
 	echo -e "kubecmd is: $kubecmd" #sudo -E microk8s.kubectl
 	checkAndWaitForActiveAgreementForPolicy "userdev/bp_k8s_embedded_ns" $ANAX_API "$kubecmd" $POD $AGENT_NAME_SPACE
@@ -405,6 +433,21 @@ else
 		echo -e "${PREFIX} cluster agent failed to check deployment for userdev/bp_k8s_embedded_ns"
   		exit 2
 	fi
+
+
+# ----------------------
+
+result7=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn exchange node list agent-in-kube -o userdev -u root/root:${EXCH_ROOTPW})
+echo "test/gov/run_kube.sh:441"
+echo ${result7} | jq
+
+result5=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo "test/gov/run_kube.sh:445"
+echo ${result5} | jq
+
+# ----------------------
+
+
 
 	# update policy userdev/bp_k8s_embedded_ns
 	echo -e "Updating deployment policy userdev/bp_k8s_embedded_ns to set \"clusterNamespace\": \"$NAMESPACE_IN_POLICY\""
