@@ -496,13 +496,13 @@ echo ${result5} | jq
 
 # ----------------------
 
-result7=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn exchange node list agent-in-kube -o userdev -u root/root:${EXCH_ROOTPW})
+result9=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn exchange node list agent-in-kube -o userdev -u root/root:${EXCH_ROOTPW})
 echo "test/gov/run_kube.sh:500"
-echo ${result7} | jq
+echo ${result9} | jq
 
-result5=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+result10=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
 echo "test/gov/run_kube.sh:504"
-echo ${result5} | jq
+echo ${result10} | jq
 
 # ----------------------
 
