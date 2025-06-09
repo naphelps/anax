@@ -313,6 +313,7 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 	fi
 
 
+
 	result=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list | jq -r '.configstate.state')
 	if [ "$result" != "unconfigured" ]; then
 		echo -e "${PREFIX} anax-in-kube configstate.state is $result, should be in 'unconfigured' state"
@@ -320,6 +321,11 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 	else
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
+
+result3=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn exchange node list -o userdev -u root/root:${EXCH_ROOTPW})
+echo ${result3}
+echo ${result3} | jq
+${result3} | jq | echo
 
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
 	$cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn register -f /home/agentuser/node_ui_k8s_embedded_svc.json -p e2edev@somecomp.com/sk8s-with-embedded-ns -u root/root:${EXCH_ROOTPW}
