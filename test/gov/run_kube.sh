@@ -312,9 +312,9 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 		echo -e "${PREFIX} cluster agent get expected error when register sk8s-with-cluster-ns, which has non-empty cluster namespace"
 	fi
 
-result3=$(curl -v -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
-echo ${result4}
-echo ${result4} | jq
+result3=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo ${result3}
+echo ${result3} | jq
 
 	result=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list | jq -r '.configstate.state')
 	if [ "$result" != "unconfigured" ]; then
@@ -324,9 +324,9 @@ echo ${result4} | jq
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
 
-result5=$(curl -v -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
-echo ${result4}
-echo ${result4} | jq
+result5=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo ${result5}
+echo ${result5} | jq
 
 	# pattern name: e2edev@somecomp.com/sk8s-with-embedded-ns
 	$cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn register -f /home/agentuser/node_ui_k8s_embedded_svc.json -p e2edev@somecomp.com/sk8s-with-embedded-ns -u root/root:${EXCH_ROOTPW}
@@ -337,9 +337,9 @@ echo ${result4} | jq
 		echo -e "${PREFIX} cluster agent registered pattern e2edev@somecomp.com/sk8s-with-embedded-ns, verifying agreement..."
 	fi
 
-result6=$(curl -v -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
-echo ${result4}
-echo ${result4} | jq
+result6=$(curl -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo ${result6}
+echo ${result6} | jq
 
 	# wait 30s for agreement to comeup
 	sleep 30
