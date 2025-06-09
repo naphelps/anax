@@ -322,7 +322,11 @@ if [ "${TEST_PATTERNS}" != "" ]; then
 		echo -e "${PREFIX} cluster agent is in expected 'unconfigured' state"
 	fi
 
-result3=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list -o userdev -u root/root:${EXCH_ROOTPW})
+result4=$(curl -v -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/agent-in-kube" -u root/root:${EXCH_ROOTPW})
+echo ${result4}
+echo ${result4} | jq
+
+result3=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list userdev -u root/root:${EXCH_ROOTPW})
 echo ${result3}
 echo ${result3} | jq
 
