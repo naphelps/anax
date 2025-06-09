@@ -326,7 +326,7 @@ result4=$(curl -v -X GET "http://${HZN_LISTEN_IP}:3090/v1/orgs/userdev/nodes/age
 echo ${result4}
 echo ${result4} | jq
 
-result3=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list userdev -u root/root:${EXCH_ROOTPW})
+result3=$($cprefix microk8s.kubectl exec ${POD} -it -n ${AGENT_NAME_SPACE} -- env ARCH=${ARCH} /usr/bin/hzn node list -u root/root:${EXCH_ROOTPW})
 echo ${result3}
 echo ${result3} | jq
 
