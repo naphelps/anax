@@ -81,7 +81,7 @@ fi
 
 timeout=6
 while [[ $(hzn agreement list | jq 'length') != 5 && timeout > 0 ]]; do
-	sleep 5s
+	sleep 30s
 	let timeout=$timeout-1
 	if [ $timeout == 0 ]; then
 		echo "timed out waiting for agreements to be reformed."
